@@ -1,4 +1,4 @@
-import { app, globalShortcut } from "electron"
+import { app, globalShortcut, BrowserWindow } from "electron"
 import { Stack } from "./stack"
 const clipboard = require('electron-clipboard-extended')
 const robot = require('robotjs')
@@ -6,7 +6,7 @@ import * as path from "path"
 import * as url from "url"
 
 const clipboardStack = new Stack()
-const stack: string[] = []
+let mainWindow: Electron.BrowserWindow = null
 
 const saveClipboard = () => {
   clipboardStack.push(clipboard.readText())
@@ -29,8 +29,10 @@ app.on("window-all-closed", () => {
 });
 
 app.on('ready', () => {
-  console.log('Clipboard Extented ready!')
-  globalShortcut.register('CommandOrControl+Shift+V', popClipboard)
-});
+  clipboard.on('text-changed', saveClipboard)
 
-clipboard.on('text-changed', saveClipboard).startWatching();
+  globalShortcut.register('CommandOrControl+Shift+V', popClipboard)
+
+  clipboard.startWatching()
+  console.log('Clipboard Extented ready!')
+});
