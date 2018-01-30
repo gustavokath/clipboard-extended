@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
+    "setup": "npm install",
     "test": "mocha -r ts-node/register specs/**/*.spec.ts",
     "build": "tsc",
     "rebuild": "npm rebuild --runtime=electron --target=1.8.1 --disturl=https://atom.io/download/atom-shell --abi=57",
