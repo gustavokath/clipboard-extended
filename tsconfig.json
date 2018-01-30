@@ -11,5 +11,9 @@
   },
   "include": [
     "src/**/*"
-  ]
+  ],
+  "exclude": [
+    "specs/**/*.spec.ts"
+  ],
+  "compileOnSave": false
 }
