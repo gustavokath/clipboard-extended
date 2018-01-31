@@ -96,4 +96,20 @@ describe('pop()', () => {
   })
 });
 
+describe('clear()', () => {
+  it('has an empty stack', () => {
+    const stack = new Stack()
+    stack.push('foo')
+    stack.clear()
+    expect(stack.stack).to.deep.equal([])
+  })
+
+  it('has an null first', () => {
+    const stack = new Stack()
+    stack.push('foo')
+    stack.clear()
+    expect(stack.first).to.equal(null)
+  })
+});
+
 

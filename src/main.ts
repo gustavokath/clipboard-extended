@@ -22,6 +22,10 @@ const popClipboard = () => {
   }
 }
 
+const clearStack = () => {
+  clipboardStack.clear()
+}
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -31,7 +35,9 @@ app.on("window-all-closed", () => {
 app.on('ready', () => {
   clipboard.on('text-changed', saveClipboard)
 
-  globalShortcut.register('CommandOrControl+Shift+V', popClipboard)
+  globalShortcut.register('CommandOrControl+Down', popClipboard)
+
+  globalShortcut.register('CommandOrControl+Shift+Delete', clearStack)
 
   clipboard.startWatching()
   console.log('Clipboard Extented ready!')
