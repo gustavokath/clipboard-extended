@@ -10,6 +10,7 @@ let mainWindow: Electron.BrowserWindow = null
 
 const saveClipboard = () => {
   clipboardStack.push(clipboard.readText())
+  console.log(clipboardStack.stack)
 }
 
 const popClipboard = () => {
@@ -35,9 +36,9 @@ app.on("window-all-closed", () => {
 app.on('ready', () => {
   clipboard.on('text-changed', saveClipboard)
 
-  globalShortcut.register('CommandOrControl+Down', popClipboard)
+  globalShortcut.register('CommandOrControl+Shift+V', popClipboard)
 
-  globalShortcut.register('CommandOrControl+Shift+Delete', clearStack)
+  globalShortcut.register('CommandOrControl+Shift+Esc', clearStack)
 
   clipboard.startWatching()
   console.log('Clipboard Extented ready!')
