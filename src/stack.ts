@@ -39,4 +39,9 @@ export class Stack {
   public isEmpty(): boolean{
     return this.stack.length == 0
   }
+
+  public clear(): void{
+    this.stack = []
+    this.first = null
+  }
 }
