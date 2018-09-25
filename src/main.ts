@@ -1,4 +1,4 @@
-import { app, globalShortcut, BrowserWindow } from "electron"
+import { app, globalShortcut, BrowserWindow, ipcMain } from "electron"
 import { Stack } from "./stack"
 const clipboard = require('electron-clipboard-extended')
 const robot = require('robotjs')
@@ -11,6 +11,7 @@ let mainWindow: Electron.BrowserWindow = null
 const saveClipboard = () => {
   clipboardStack.push(clipboard.readText())
   console.log(clipboardStack.stack)
+  notifyStackChange()
 }
 
 const popClipboard = () => {
@@ -20,6 +21,14 @@ const popClipboard = () => {
   robot.typeString(clipboard.readText())
   if(!clipboardStack.isEmpty()){
     clipboard.writeText(clipboardStack.getTop())
+  }
+  notifyStackChange()
+}
+
+const notifyStackChange = () => {
+  if(mainWindow != null){
+    console.log('aaaaaaaa')
+    mainWindow.webContents.send('handle-stack-change', { stack: clipboardStack.stack });
   }
 }
 
@@ -75,4 +84,8 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('asynchronous-message', (event: any, arg: any) => {
+  event.sender.send('asynchronous-reply', {stack: clipboardStack.stack})
 });
